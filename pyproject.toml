@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "spotimoo"
+version = "0.0.1"
+description = "Library that provides access to the Spotify API"
+authors = ["Egor Bronnikov <bronnikov.40@mail.ru>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+black = "^23.1"
+pytest = "^7.2"
+pytest-black = "^0.3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
