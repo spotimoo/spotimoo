@@ -1,2 +1,2 @@
 def test() -> int:
-    return 43
+    return 42
