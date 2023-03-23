@@ -44,5 +44,8 @@ jobs:
           git add ./docs/.
           git commit -m 'Update documentation page'
 
-      - name: Git push
-        run: git push -f origin main
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
