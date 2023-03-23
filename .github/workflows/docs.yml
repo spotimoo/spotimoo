@@ -9,14 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions: write-all
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          git config user.name Egor
-          git config user.email bronnikov.40@mail.ru
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
       - name: Install Python 3.11
         uses: actions/setup-python@v1
@@ -43,4 +45,4 @@ jobs:
           git commit -m 'Update documentation page'
 
       - name: Git push
-        run: git push
+        run: git push -f origin main
