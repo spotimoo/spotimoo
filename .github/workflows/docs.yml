@@ -1,0 +1,46 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11
+
+      - name: Upgrade pip
+        run: python3 -m pip install --upgrade pip
+
+      - name: Install Sphinx
+        run: |
+          pip3 install sphinx
+          pip3 install sphinx_rtd_theme
+
+      - name: Build documentation
+        run: |
+          cd docs
+          sphinx-apidoc -o . ..
+          make html
+
+      - name: Git clone
+        run: git clone git@github.com:spotimoo/spotimoo.git
+
+      - name: Git commit
+        run: |
+          git add ./docs/.
+          git commit -m 'Update documentation page'
+          
+      - name: Git pish
+        run: git push

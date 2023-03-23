@@ -1,5 +1,6 @@
 from typing import Callable, Self
 from base64 import b64encode
+from functools import wraps
 
 from requests import request
 from requests.models import Response
@@ -15,6 +16,7 @@ def _validate_request(function: Callable) -> Callable:
     :type: typing.Callable
     """
 
+    @wraps(function)
     def wrapper(*args, **kwargs):
         response = function(*args, **kwargs)
         if not response.ok:
@@ -97,7 +99,9 @@ class Spotimoo:
         """Request that return response with track information.
 
         :param track_id: Track identifier in Spotify. For example:
+
             Link: https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=5e9a14dc868948da
+
             Track ID: 4cOdK2wGLETKBW3PvgPWqT
         :type track_id: str
         :return: Response to this request
