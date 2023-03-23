@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@main
         with:
           fetch-depth: 1
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -42,5 +42,5 @@ jobs:
           git add ./docs/.
           git commit -m 'Update documentation page'
           
-      - name: Git pish
+      - name: Git push
         run: git push
