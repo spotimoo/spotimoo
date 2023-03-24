@@ -1,3 +1,5 @@
+__all__ = ["Spotimoo"]
+
 from typing import Callable, Self
 from base64 import b64encode
 from functools import wraps
@@ -116,6 +118,32 @@ class Spotimoo:
         return request(
             "GET",
             f"https://api.spotify.com/v1/tracks/{track_id}",
+            headers=headers,
+            timeout=self.timeout,
+        )
+
+    @_validate_request
+    def album(self: Self, album_id: str) -> Response:
+        """Request that return response with album information.
+
+        :param album_id: Album identifier in Spotify. For example:
+
+            Link: https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE?si=fnZU07tQSYuWJrve5LgTOQ
+
+            Track ID: 0XRZpF083HqgygM0v1hQyE
+        :type album_id: str
+        :return: Response to this request
+        :rtype: requests.model.Response
+        """
+        headers = {
+            "Accept": "applications/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        return request(
+            "GET",
+            f"https://api.spotify.com/v1/albums/{album_id}",
             headers=headers,
             timeout=self.timeout,
         )

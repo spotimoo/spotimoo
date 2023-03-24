@@ -36,6 +36,14 @@ def test_repr_dunder_method(client_id, client_secret, spotimoo) -> None:
     assert expect == actual
 
 
+def test_incorrect_request(spotimoo) -> None:
+    track_id = "invalid_track_id"
+    with raises(IncorrectRequest) as exception:
+        spotimoo.track(track_id)
+
+    assert exception.value.status_code == 400
+
+
 def test_correct_track(spotimoo) -> None:
     track_id = "4cOdK2wGLETKBW3PvgPWqT"
     result = spotimoo.track(track_id).json()
@@ -51,9 +59,16 @@ def test_correct_track(spotimoo) -> None:
     assert expect == actual
 
 
-def test_incorrect_request(spotimoo) -> None:
-    track_id = "invalid_track_id"
-    with raises(IncorrectRequest) as exception:
-        spotimoo.track(track_id)
+def test_correct_album(spotimoo) -> None:
+    album_id = "0XRZpF083HqgygM0v1hQyE"
+    result = spotimoo.album(album_id).json()
 
-    assert exception.value.status_code == 400
+    actual = result["artists"][0]["name"]
+    expect = "The Beatles"
+
+    assert expect == actual
+
+    actual = result["name"]
+    expect = "Yellow Submarine Songtrack"
+
+    assert expect == actual
