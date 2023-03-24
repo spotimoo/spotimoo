@@ -72,3 +72,13 @@ def test_correct_album(spotimoo) -> None:
     expect = "Yellow Submarine Songtrack"
 
     assert expect == actual
+
+
+def test_correct_artist(spotimoo) -> None:
+    artist_id = "4NJhFmfw43RLBLjQvxDuRS"
+    result = spotimoo.artist(artist_id).json()
+
+    actual = result["name"]
+    expect = "Wolfgang Amadeus Mozart"
+
+    assert expect == actual
