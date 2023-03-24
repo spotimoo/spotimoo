@@ -218,6 +218,32 @@
             <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/albums/</span><span class="si">{</span><span class="n">album_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Spotimoo.artist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.artist">[docs]</a>    <span class="nd">@_validate_request</span>
+    <span class="k">def</span> <span class="nf">artist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with artist information.</span>
+
+<span class="sd">        :param artist_id: Artist identifier in Spotify. For example:</span>
+
+<span class="sd">            Link: https://open.spotify.com/artist/4NJhFmfw43RLBLjQvxDuRS?si=RsXekpUYRsWO1t_-oxs2Ew</span>
+
+<span class="sd">            Track ID: 4NJhFmfw43RLBLjQvxDuRS</span>
+<span class="sd">        :type artist_id: str</span>
+<span class="sd">        :return: Response to this request</span>
+<span class="sd">        :rtype: requests.model.Response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
+            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/artists/</span><span class="si">{</span><span class="n">artist_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
