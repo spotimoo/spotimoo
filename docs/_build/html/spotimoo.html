@@ -79,7 +79,7 @@
 <span id="spotimoo-exceptions-module"></span><h2>spotimoo.exceptions module<a class="headerlink" href="#module-spotimoo.exceptions" title="Permalink to this heading"></a></h2>
 <dl class="py exception">
 <dt class="sig sig-object py" id="spotimoo.exceptions.IncorrectRequest">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spotimoo.exceptions.</span></span><span class="sig-name descname"><span class="pre">IncorrectRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spotimoo.exceptions.IncorrectRequest" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spotimoo.exceptions.</span></span><span class="sig-name descname"><span class="pre">IncorrectRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spotimoo/exceptions.html#IncorrectRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spotimoo.exceptions.IncorrectRequest" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Raises when we got request error.</p>
 </dd></dl>
@@ -89,7 +89,7 @@
 <span id="spotimoo-spotimoo-module"></span><h2>spotimoo.spotimoo module<a class="headerlink" href="#module-spotimoo.spotimoo" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="spotimoo.spotimoo.Spotimoo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spotimoo.spotimoo.</span></span><span class="sig-name descname"><span class="pre">Spotimoo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spotimoo.spotimoo.Spotimoo" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spotimoo.spotimoo.</span></span><span class="sig-name descname"><span class="pre">Spotimoo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spotimoo/spotimoo.html#Spotimoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spotimoo.spotimoo.Spotimoo" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Spotimoo is a base class that provides an interface to the Spotify API.</p>
 <dl class="field-list simple">
@@ -105,8 +105,28 @@ failed request</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="spotimoo.spotimoo.Spotimoo.album">
+<span class="sig-name descname"><span class="pre">album</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">album_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Response</span></span></span><a class="reference internal" href="_modules/spotimoo/spotimoo.html#Spotimoo.album"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spotimoo.spotimoo.Spotimoo.album" title="Permalink to this definition"></a></dt>
+<dd><p>Request that return response with album information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>album_id</strong> (<em>str</em>) – <p>Album identifier in Spotify. For example:</p>
+<p>Link: <a class="reference external" href="https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE?si=fnZU07tQSYuWJrve5LgTOQ">https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE?si=fnZU07tQSYuWJrve5LgTOQ</a></p>
+<p>Track ID: 0XRZpF083HqgygM0v1hQyE</p>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response to this request</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>requests.model.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="spotimoo.spotimoo.Spotimoo.track">
-<span class="sig-name descname"><span class="pre">track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">track_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Response</span></span></span><a class="headerlink" href="#spotimoo.spotimoo.Spotimoo.track" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">track_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Response</span></span></span><a class="reference internal" href="_modules/spotimoo/spotimoo.html#Spotimoo.track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spotimoo.spotimoo.Spotimoo.track" title="Permalink to this definition"></a></dt>
 <dd><p>Request that return response with track information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
