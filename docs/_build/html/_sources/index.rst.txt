@@ -1,20 +1,12 @@
-.. Spotimoo documentation master file, created by
-   sphinx-quickstart on Thu Mar 23 22:22:59 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Spotimoo's documentation!
 ====================================
+
+*Spotimoo* is a tiny library that provides access to the `Spotify Web API`_.
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
-   modules
+   api
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. _Spotify Web API: https://developer.spotify.com/documentation/web-api/
