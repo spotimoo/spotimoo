@@ -147,3 +147,29 @@ class Spotimoo:
             headers=headers,
             timeout=self.timeout,
         )
+
+    @_validate_request
+    def artist(self: Self, artist_id: str) -> Response:
+        """Request that return response with artist information.
+
+        :param artist_id: Artist identifier in Spotify. For example:
+
+            Link: https://open.spotify.com/artist/4NJhFmfw43RLBLjQvxDuRS?si=RsXekpUYRsWO1t_-oxs2Ew
+
+            Track ID: 4NJhFmfw43RLBLjQvxDuRS
+        :type artist_id: str
+        :return: Response to this request
+        :rtype: requests.model.Response
+        """
+        headers = {
+            "Accept": "applications/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        return request(
+            "GET",
+            f"https://api.spotify.com/v1/artists/{artist_id}",
+            headers=headers,
+            timeout=self.timeout,
+        )
