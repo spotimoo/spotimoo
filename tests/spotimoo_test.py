@@ -82,3 +82,13 @@ def test_correct_artist(spotimoo) -> None:
     expect = "Wolfgang Amadeus Mozart"
 
     assert expect == actual
+
+
+def test_correct_user(spotimoo) -> None:
+    user_id = "216ndgqqr2hlj3be4gf3rjzoa"
+    result = spotimoo.user(user_id).json()
+
+    actual = result["type"]
+    expect = "user"
+
+    assert expect == actual
