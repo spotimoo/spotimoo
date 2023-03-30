@@ -100,7 +100,7 @@
     <span class="k">return</span> <span class="n">wrapper</span>
 
 
-<div class="viewcode-block" id="Spotimoo"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo">[docs]</a><span class="k">class</span> <span class="nc">Spotimoo</span><span class="p">:</span>
+<div class="viewcode-block" id="Spotimoo"><a class="viewcode-back" href="../../spotimoo.html#spotimoo.spotimoo.Spotimoo">[docs]</a><span class="k">class</span> <span class="nc">Spotimoo</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Spotimoo is a base class that provides an interface to the Spotify API.</span>
 
 <span class="sd">    :param client_id: Client ID field from Spotify API that must be supplied or</span>
@@ -168,7 +168,7 @@
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_token_response</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Spotimoo.track"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.track">[docs]</a>    <span class="nd">@_validate_request</span>
+<div class="viewcode-block" id="Spotimoo.track"><a class="viewcode-back" href="../../spotimoo.html#spotimoo.spotimoo.Spotimoo.track">[docs]</a>    <span class="nd">@_validate_request</span>
     <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">track_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with track information.</span>
 
@@ -194,7 +194,7 @@
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Spotimoo.album"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.album">[docs]</a>    <span class="nd">@_validate_request</span>
+<div class="viewcode-block" id="Spotimoo.album"><a class="viewcode-back" href="../../spotimoo.html#spotimoo.spotimoo.Spotimoo.album">[docs]</a>    <span class="nd">@_validate_request</span>
     <span class="k">def</span> <span class="nf">album</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">album_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with album information.</span>
 
@@ -202,7 +202,7 @@
 
 <span class="sd">            Link: https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE?si=fnZU07tQSYuWJrve5LgTOQ</span>
 
-<span class="sd">            Track ID: 0XRZpF083HqgygM0v1hQyE</span>
+<span class="sd">            Album ID: 0XRZpF083HqgygM0v1hQyE</span>
 <span class="sd">        :type album_id: str</span>
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
@@ -220,7 +220,7 @@
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Spotimoo.artist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.artist">[docs]</a>    <span class="nd">@_validate_request</span>
+<div class="viewcode-block" id="Spotimoo.artist"><a class="viewcode-back" href="../../spotimoo.html#spotimoo.spotimoo.Spotimoo.artist">[docs]</a>    <span class="nd">@_validate_request</span>
     <span class="k">def</span> <span class="nf">artist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with artist information.</span>
 
@@ -228,7 +228,7 @@
 
 <span class="sd">            Link: https://open.spotify.com/artist/4NJhFmfw43RLBLjQvxDuRS?si=RsXekpUYRsWO1t_-oxs2Ew</span>
 
-<span class="sd">            Track ID: 4NJhFmfw43RLBLjQvxDuRS</span>
+<span class="sd">            Artist ID: 4NJhFmfw43RLBLjQvxDuRS</span>
 <span class="sd">        :type artist_id: str</span>
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
