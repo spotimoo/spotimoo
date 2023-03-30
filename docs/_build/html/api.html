@@ -81,7 +81,7 @@
   <section id="api-reference">
 <h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
 <section id="spotimoo-module">
-<h2><a class="reference internal" href="spotimoo.html#module-spotimoo" title="spotimoo"><code class="xref py py-mod docutils literal notranslate"><span class="pre">spotimoo</span></code></a> Module<a class="headerlink" href="#spotimoo-module" title="Permalink to this heading"></a></h2>
+<h2><code class="xref py py-mod docutils literal notranslate"><span class="pre">spotimoo</span></code> Module<a class="headerlink" href="#spotimoo-module" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spotimoo.spotimoo.</span></span><span class="sig-name descname"><span class="pre">Spotimoo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spotimoo/spotimoo.html#Spotimoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
@@ -148,6 +148,26 @@ failed request</p></li>
 <dd class="field-odd"><p><strong>track_id</strong> (<em>str</em>) – <p>Track identifier in Spotify. For example:</p>
 <p>Link: <a class="reference external" href="https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=5e9a14dc868948da">https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=5e9a14dc868948da</a></p>
 <p>Track ID: 4cOdK2wGLETKBW3PvgPWqT</p>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response to this request</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>requests.model.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Response</span></span></span><a class="reference internal" href="_modules/spotimoo/spotimoo.html#Spotimoo.user"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Request that return response with user information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>str</em>) – <p>User identifier in Spotify. For example:</p>
+<p>Link: <a class="reference external" href="https://open.spotify.com/user/216ndgqqr2hlj3be4gf3rjzoa?si=defb0c8c29204b09">https://open.spotify.com/user/216ndgqqr2hlj3be4gf3rjzoa?si=defb0c8c29204b09</a></p>
+<p>User ID: 216ndgqqr2hlj3be4gf3rjzoa</p>
 </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
