@@ -199,3 +199,29 @@ class Spotimoo:
             headers=headers,
             timeout=self.timeout,
         )
+
+    @_validate_request
+    def playlist(self: Self, playlist_id: str) -> Response:
+        """Request that return response with playlist information.
+
+        :param playlist_id: Playlist identifier in Spotify. For example:
+
+            Link: https://open.spotify.com/playlist/3sWRnit5VevDAQGiBoPpmP?si=781fc19fd6674f60
+
+            Playlist ID: 3sWRnit5VevDAQGiBoPpmP
+        :type playlist_id: str
+        :return: Response to this request
+        :rtype: requests.model.Response
+        """
+        headers = {
+            "Accept": "applications/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        return request(
+            "GET",
+            f"https://api.spotify.com/v1/playlists/{playlist_id}?fields=name%2Cimages%2Cowner",
+            headers=headers,
+            timeout=self.timeout,
+        )

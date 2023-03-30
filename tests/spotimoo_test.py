@@ -92,3 +92,13 @@ def test_correct_user(spotimoo) -> None:
     expect = "user"
 
     assert expect == actual
+
+
+def test_correct_playlist(spotimoo) -> None:
+    playlist_id = "3sWRnit5VevDAQGiBoPpmP"
+    result = spotimoo.playlist(playlist_id).json()
+
+    actual = result["owner"]["display_name"]
+    expect = "Егор Бронников"
+
+    assert expect == actual
