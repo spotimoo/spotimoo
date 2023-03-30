@@ -173,3 +173,29 @@ class Spotimoo:
             headers=headers,
             timeout=self.timeout,
         )
+
+    @_validate_request
+    def user(self: Self, user_id: str) -> Response:
+        """Request that return response with user information.
+
+        :param user_id: User identifier in Spotify. For example:
+
+            Link: https://open.spotify.com/user/216ndgqqr2hlj3be4gf3rjzoa?si=defb0c8c29204b09
+
+            User ID: 216ndgqqr2hlj3be4gf3rjzoa
+        :type user_id: str
+        :return: Response to this request
+        :rtype: requests.model.Response
+        """
+        headers = {
+            "Accept": "applications/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        return request(
+            "GET",
+            f"https://api.spotify.com/v1/users/{user_id}",
+            headers=headers,
+            timeout=self.timeout,
+        )
