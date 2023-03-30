@@ -112,7 +112,7 @@ class Spotimoo:
     def _spotify_get(
         self: Self, request_: str, id_: str, *, options: str = ""
     ) -> Response:
-        """Default pattern for GET request Spotify API.
+        """Represent basic pattern for GET request Spotify API.
 
         :param request_: Main request URL
         :type request_: str
