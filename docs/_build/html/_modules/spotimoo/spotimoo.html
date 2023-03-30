@@ -74,7 +74,8 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Self</span>
 <span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
@@ -87,7 +88,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the request was processed correctly.</span>
 
 <span class="sd">    :param function: Decorated function that returns a response</span>
-<span class="sd">    :type: typing.Callable</span>
+<span class="sd">    :type function: typing.Callable</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
@@ -98,6 +99,17 @@
         <span class="k">return</span> <span class="n">response</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="k">def</span> <span class="nf">_build_url</span><span class="p">(</span><span class="o">*</span><span class="n">urls</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a URL address from sequence of parts.</span>
+
+<span class="sd">    :param urls: Sequence of URL parts</span>
+<span class="sd">    :type urls: str</span>
+<span class="sd">    :return: URL address</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">urljoin</span><span class="p">,</span> <span class="n">urls</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Spotimoo"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo">[docs]</a><span class="k">class</span> <span class="nc">Spotimoo</span><span class="p">:</span>
@@ -168,8 +180,33 @@
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_token_response</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Spotimoo.track"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.track">[docs]</a>    <span class="nd">@_validate_request</span>
-    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">track_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+    <span class="nd">@_validate_request</span>
+    <span class="k">def</span> <span class="nf">_spotify_get</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">request_</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">id_</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default pattern for GET request Spotify API.</span>
+
+<span class="sd">        :param request_: Main request URL</span>
+<span class="sd">        :type request_: str</span>
+<span class="sd">        :param id_: Request identifier</span>
+<span class="sd">        :type id_: str</span>
+<span class="sd">        :param options: Query options for request</span>
+<span class="sd">        :type options: str, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
+            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="n">_build_url</span><span class="p">(</span><span class="n">request_</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Spotimoo.track"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.track">[docs]</a>    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">track_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with track information.</span>
 
 <span class="sd">        :param track_id: Track identifier in Spotify. For example:</span>
@@ -181,21 +218,9 @@
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_get</span><span class="p">(</span><span class="s2">&quot;https://api.spotify.com/v1/tracks/&quot;</span><span class="p">,</span> <span class="n">track_id</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
-            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/tracks/</span><span class="si">{</span><span class="n">track_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Spotimoo.album"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.album">[docs]</a>    <span class="nd">@_validate_request</span>
-    <span class="k">def</span> <span class="nf">album</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">album_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<div class="viewcode-block" id="Spotimoo.album"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.album">[docs]</a>    <span class="k">def</span> <span class="nf">album</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">album_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with album information.</span>
 
 <span class="sd">        :param album_id: Album identifier in Spotify. For example:</span>
@@ -207,21 +232,9 @@
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_get</span><span class="p">(</span><span class="s2">&quot;https://api.spotify.com/v1/albums/&quot;</span><span class="p">,</span> <span class="n">album_id</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
-            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/albums/</span><span class="si">{</span><span class="n">album_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Spotimoo.artist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.artist">[docs]</a>    <span class="nd">@_validate_request</span>
-    <span class="k">def</span> <span class="nf">artist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<div class="viewcode-block" id="Spotimoo.artist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.artist">[docs]</a>    <span class="k">def</span> <span class="nf">artist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with artist information.</span>
 
 <span class="sd">        :param artist_id: Artist identifier in Spotify. For example:</span>
@@ -233,21 +246,9 @@
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_get</span><span class="p">(</span><span class="s2">&quot;https://api.spotify.com/v1/artists/&quot;</span><span class="p">,</span> <span class="n">artist_id</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
-            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/artists/</span><span class="si">{</span><span class="n">artist_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Spotimoo.user"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.user">[docs]</a>    <span class="nd">@_validate_request</span>
-    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<div class="viewcode-block" id="Spotimoo.user"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.user">[docs]</a>    <span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with user information.</span>
 
 <span class="sd">        :param user_id: User identifier in Spotify. For example:</span>
@@ -259,21 +260,9 @@
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_get</span><span class="p">(</span><span class="s2">&quot;https://api.spotify.com/v1/users/&quot;</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span></div>
 
-        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
-            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/users/</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Spotimoo.playlist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.playlist">[docs]</a>    <span class="nd">@_validate_request</span>
-    <span class="k">def</span> <span class="nf">playlist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">playlist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<div class="viewcode-block" id="Spotimoo.playlist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.playlist">[docs]</a>    <span class="k">def</span> <span class="nf">playlist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">playlist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with playlist information.</span>
 
 <span class="sd">        :param playlist_id: Playlist identifier in Spotify. For example:</span>
@@ -285,17 +274,10 @@
 <span class="sd">        :return: Response to this request</span>
 <span class="sd">        :rtype: requests.model.Response</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
-            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/playlists/</span><span class="si">{</span><span class="n">playlist_id</span><span class="si">}</span><span class="s2">?fields=name%2Cimages%2Cowner&quot;</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spotify_get</span><span class="p">(</span>
+            <span class="s2">&quot;https://api.spotify.com/v1/playlists/&quot;</span><span class="p">,</span>
+            <span class="n">playlist_id</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="s2">&quot;?fields=name%2Cimages%2Cowner&quot;</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
