@@ -130,7 +130,7 @@ class Spotimoo:
 
             Link: https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE?si=fnZU07tQSYuWJrve5LgTOQ
 
-            Track ID: 0XRZpF083HqgygM0v1hQyE
+            Album ID: 0XRZpF083HqgygM0v1hQyE
         :type album_id: str
         :return: Response to this request
         :rtype: requests.model.Response
@@ -156,7 +156,7 @@ class Spotimoo:
 
             Link: https://open.spotify.com/artist/4NJhFmfw43RLBLjQvxDuRS?si=RsXekpUYRsWO1t_-oxs2Ew
 
-            Track ID: 4NJhFmfw43RLBLjQvxDuRS
+            Artist ID: 4NJhFmfw43RLBLjQvxDuRS
         :type artist_id: str
         :return: Response to this request
         :rtype: requests.model.Response
