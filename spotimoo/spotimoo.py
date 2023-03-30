@@ -2,7 +2,8 @@ __all__ = ["Spotimoo"]
 
 from typing import Callable, Self
 from base64 import b64encode
-from functools import wraps
+from functools import wraps, reduce
+from urllib.parse import urljoin
 
 from requests import request
 from requests.models import Response
@@ -15,7 +16,7 @@ def _validate_request(function: Callable) -> Callable:
     """Check if the request was processed correctly.
 
     :param function: Decorated function that returns a response
-    :type: typing.Callable
+    :type function: typing.Callable
     """
 
     @wraps(function)
@@ -26,6 +27,17 @@ def _validate_request(function: Callable) -> Callable:
         return response
 
     return wrapper
+
+
+def _build_url(*urls: str) -> str:
+    """Build a URL address from sequence of parts.
+
+    :param urls: Sequence of URL parts
+    :type urls: str
+    :return: URL address
+    :rtype: str
+    """
+    return reduce(urljoin, urls)
 
 
 class Spotimoo:
@@ -97,6 +109,31 @@ class Spotimoo:
         return response["access_token"]
 
     @_validate_request
+    def _spotify_get(
+        self: Self, request_: str, id_: str, *, options: str = ""
+    ) -> Response:
+        """Represent basic pattern for GET request Spotify API.
+
+        :param request_: Main request URL
+        :type request_: str
+        :param id_: Request identifier
+        :type id_: str
+        :param options: Query options for request
+        :type options: str, optional
+        """
+        headers = {
+            "Accept": "applications/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        return request(
+            "GET",
+            _build_url(request_, id_, options),
+            headers=headers,
+            timeout=self.timeout,
+        )
+
     def track(self: Self, track_id: str) -> Response:
         """Request that return response with track information.
 
@@ -109,20 +146,8 @@ class Spotimoo:
         :return: Response to this request
         :rtype: requests.model.Response
         """
-        headers = {
-            "Accept": "applications/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.token}",
-        }
+        return self._spotify_get("https://api.spotify.com/v1/tracks/", track_id)
 
-        return request(
-            "GET",
-            f"https://api.spotify.com/v1/tracks/{track_id}",
-            headers=headers,
-            timeout=self.timeout,
-        )
-
-    @_validate_request
     def album(self: Self, album_id: str) -> Response:
         """Request that return response with album information.
 
@@ -135,20 +160,8 @@ class Spotimoo:
         :return: Response to this request
         :rtype: requests.model.Response
         """
-        headers = {
-            "Accept": "applications/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.token}",
-        }
+        return self._spotify_get("https://api.spotify.com/v1/albums/", album_id)
 
-        return request(
-            "GET",
-            f"https://api.spotify.com/v1/albums/{album_id}",
-            headers=headers,
-            timeout=self.timeout,
-        )
-
-    @_validate_request
     def artist(self: Self, artist_id: str) -> Response:
         """Request that return response with artist information.
 
@@ -161,20 +174,8 @@ class Spotimoo:
         :return: Response to this request
         :rtype: requests.model.Response
         """
-        headers = {
-            "Accept": "applications/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.token}",
-        }
+        return self._spotify_get("https://api.spotify.com/v1/artists/", artist_id)
 
-        return request(
-            "GET",
-            f"https://api.spotify.com/v1/artists/{artist_id}",
-            headers=headers,
-            timeout=self.timeout,
-        )
-
-    @_validate_request
     def user(self: Self, user_id: str) -> Response:
         """Request that return response with user information.
 
@@ -187,20 +188,8 @@ class Spotimoo:
         :return: Response to this request
         :rtype: requests.model.Response
         """
-        headers = {
-            "Accept": "applications/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.token}",
-        }
+        return self._spotify_get("https://api.spotify.com/v1/users/", user_id)
 
-        return request(
-            "GET",
-            f"https://api.spotify.com/v1/users/{user_id}",
-            headers=headers,
-            timeout=self.timeout,
-        )
-
-    @_validate_request
     def playlist(self: Self, playlist_id: str) -> Response:
         """Request that return response with playlist information.
 
@@ -213,15 +202,8 @@ class Spotimoo:
         :return: Response to this request
         :rtype: requests.model.Response
         """
-        headers = {
-            "Accept": "applications/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.token}",
-        }
-
-        return request(
-            "GET",
-            f"https://api.spotify.com/v1/playlists/{playlist_id}?fields=name%2Cimages%2Cowner",
-            headers=headers,
-            timeout=self.timeout,
+        return self._spotify_get(
+            "https://api.spotify.com/v1/playlists/",
+            playlist_id,
+            options="?fields=name%2Cimages%2Cowner",
         )
