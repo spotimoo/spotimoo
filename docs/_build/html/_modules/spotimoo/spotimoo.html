@@ -270,6 +270,32 @@
             <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/users/</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Spotimoo.playlist"><a class="viewcode-back" href="../../api.html#spotimoo.spotimoo.Spotimoo.playlist">[docs]</a>    <span class="nd">@_validate_request</span>
+    <span class="k">def</span> <span class="nf">playlist</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">playlist_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Request that return response with playlist information.</span>
+
+<span class="sd">        :param playlist_id: Playlist identifier in Spotify. For example:</span>
+
+<span class="sd">            Link: https://open.spotify.com/playlist/3sWRnit5VevDAQGiBoPpmP?si=781fc19fd6674f60</span>
+
+<span class="sd">            Playlist ID: 3sWRnit5VevDAQGiBoPpmP</span>
+<span class="sd">        :type playlist_id: str</span>
+<span class="sd">        :return: Response to this request</span>
+<span class="sd">        :rtype: requests.model.Response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;applications/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">request</span><span class="p">(</span>
+            <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;https://api.spotify.com/v1/playlists/</span><span class="si">{</span><span class="n">playlist_id</span><span class="si">}</span><span class="s2">?fields=name%2Cimages%2Cowner&quot;</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
