@@ -99,6 +99,6 @@ def test_correct_playlist(spotimoo) -> None:
     result = spotimoo.playlist(playlist_id).json()
 
     actual = result["owner"]["display_name"]
-    expect = "Егор Бронников"
+    expect = "Egor Bronnikov"
 
     assert expect == actual
